@@ -1,0 +1,36 @@
+**Authtoken in header:**
+
+   **Advantages:**
+   Protects against authorisation issues - Attacker has no access to the token
+   Protects against Cross Site Request Forgery attacks as header values cannot be appended directly by a malicious request originating from other domain.
+   Protects against Cross Origin Resource Sharing - Because custom header is not sent even if Access-Control-Allow-Credentials value is set to true.
+
+   **Disadvantages:** 
+   Header size is limited.
+   Mostly Single Page applications store token in local storage making it suspectible to leak via Cross Site Scripting attack.
+   Value not encrypted by browser
+
+**Authtoken in body:**
+
+   **Advantages:**
+   Protects against authorisation issues - Attacker has no access to the token
+   Protects against Cross Site Request Forgery attacks as header values cannot be appended directly by a malicious request originating from other domain.
+   Protects against Cross Origin Resource Sharing - Because custom header is not sent even if Access-Control-Allow-Credentials value is set to true.
+   Token size is not limited as compared to header and cookie value.
+
+   **Disadvantages:**
+   Tokens can be leaked via Cross Site Scripting attack.
+
+**Authtoken in cookie:**
+
+      **Advantages:**
+      Protects against authorisation issues - Attacker has no access to the token
+      Protects against XSS if HTTPOnly flag is set for cookie
+      Protects token to be transmitted over non HTTPS channel by setting the cookie attribute to secure.
+      Encrypted by browsers. 
+
+      **Disadvantages:**
+      Vulnerable to Cross Site Request Forgery as cookies are automatically appended in request by another malicious domain opened in same browser session, additional anti-CSRF token or same site cookie attribute 
+      is required in post body for protection. If we use the authtoken token only then again the risk of it being leaked via XSS.
+      Vulnerable to CORS attack as cookies are automatically appended if Access-Control-Allow-Credentials is set to true, added measures for origin header needed.
+      Cookie size is limited.
